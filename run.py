@@ -1,10 +1,4 @@
-from flask import Flask, render_template
+from job_portal import app
 
-#create a flask instance
-app = Flask(__name__)
-
-#creating a route
-@app.route('/')
-@app.route('/home')
-def home():
-    return "hello world"
+if __name__ == '__main__':
+    app.run(debug=True)
