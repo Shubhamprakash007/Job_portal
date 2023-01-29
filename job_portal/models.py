@@ -19,6 +19,16 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
+class Employer(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(60), nullable=False)
+    jobs = db.relationship('JobPost', backref='author', lazy=True)
+
+    def __repr__(self):
+        return f"Employer('{self.username}', '{self.email}')"
+
 
 class Resume(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -28,9 +38,10 @@ class Resume(db.Model):
     experience = db.Column(db.Text, nullable=False)
     education = db.Column(db.Text, nullable=False)
     skills = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"Post('{self.name}', '{self.objective}')"
+        return f"Resume('{self.name}')"
 
 class JobPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -41,6 +52,8 @@ class JobPost(db.Model):
     job_description = db.Column(db.Text, nullable=False)
     salary = db.Column(db.String(50), nullable=False)
     experience_required = db.Column(db.String(50), nullable=False)
-
+    employer_id = db.Column(db.Integer, db.ForeignKey('employer.id'), nullable=False)
     def __repr__(self):
         return f"Post('{self.job_title}', '{self.date_posted}')"
+
+

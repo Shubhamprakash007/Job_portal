@@ -32,14 +32,12 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
-class JobPostForm(FlaskForm):
-    job_title = StringField('Job Title', validators=[DataRequired()])
-    company_name = StringField('Company Name', validators=[DataRequired()])
-    location = StringField('Location', validators=[DataRequired()])
-    job_description = TextAreaField('Job Description', validators=[DataRequired()])
-    salary = StringField('Salary', validators=[DataRequired()])
-    experience_required = StringField('Experience Required', validators=[DataRequired()])
-    submit = SubmitField('Post Job')
+
+class JobPost(FlaskForm):
+    job_title = StringField('Job Title', validators=[DataRequired])
+    company_name = StringField('Company Name', validators=[DataRequired])
+    CTC_offered = StringField('CTC Offered', validators=[DataRequired])
+    job_description = StringField('Job Description', validators=[DataRequired])
 
 
 class ResumeForm(FlaskForm):
