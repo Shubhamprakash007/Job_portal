@@ -14,7 +14,7 @@ def about():
     return render_template('about.html', title='About')
 
 @app.route("/register_employer", methods=['GET', 'POST'])
-def register_student():
+def register_employer():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = EmployerRegistrationForm()

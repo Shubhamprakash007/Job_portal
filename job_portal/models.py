@@ -7,9 +7,9 @@ from flask_login import UserMixin
 def load_user(user_id):
     return Student.query.get(int(user_id))
 
-@login_manager.user_loader
-def load_employer(user_id):
-    return Employer.query.get(int(user_id))
+# @login_manager.user_loader
+# def load_employer(user_id):
+#     return Employer.query.get(int(user_id))
 
 
 
