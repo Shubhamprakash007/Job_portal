@@ -1,12 +1,12 @@
 from flask import render_template, url_for, flash, redirect, request
 from job_portal import app, db, bcrypt
 from job_portal.forms import RegistrationForm, LoginForm, ApplyForm, JobPostForm, ResumeForm
-from job_portal.models import User, Employer, Resume, JobPost
+from job_portal.models import User, Employer, Resume, JobPostForm
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route("/")
 def home():
-    jobs = JobPost.query.all()
+    jobs = JobPostForm.query.all()
     return render_template('home.html', jobs=jobs)
 
 @app.route("/about")
@@ -47,7 +47,7 @@ def resume():
 def jobpost():
     form = JobPostForm()
     if form.validate_on_submit():
-        jobpost = JobPost(job_title=form.job_title.data,
+        jobpost = JobPostForm(job_title=form.job_title.data,
                           company_name=form.company_name.data,
                           location=form.location.data,
                           job_description=form.job_description.data,
@@ -57,22 +57,6 @@ def jobpost():
         db.session.commit()
         return redirect(url_for('success'))
     return render_template('jobpost.html', form=form)
-
-
-@app.route("/login", methods=['GET', 'POST'])
-def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
-            login_user(user, remember=form.remember.data)
-            next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('home'))
-        else:
-            flash('Login Unsuccessful. Please check email and password', 'danger')
-    return render_template('login.html', title='Login', form=form)
 
 
 @app.route("/login", methods=['GET', 'POST'])

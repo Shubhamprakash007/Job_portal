@@ -3,7 +3,6 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextA
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from job_portal.models import User
 
-
 class RegistrationForm(FlaskForm):
     username = StringField('Username',
                            validators=[DataRequired(), Length(min=2, max=20)])
@@ -33,13 +32,6 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 
-class JobPost(FlaskForm):
-    job_title = StringField('Job Title', validators=[DataRequired])
-    company_name = StringField('Company Name', validators=[DataRequired])
-    CTC_offered = StringField('CTC Offered', validators=[DataRequired])
-    job_description = StringField('Job Description', validators=[DataRequired])
-
-
 class ResumeForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
@@ -48,7 +40,21 @@ class ResumeForm(FlaskForm):
     education = TextAreaField('Education', validators=[DataRequired()])
     skills = TextAreaField('Skills', validators=[DataRequired()])
     submit = SubmitField('Submit')
-    
 
+class JobPostForm(FlaskForm):
+    job_title = StringField('Job Title', validators=[DataRequired()])
+    company_name = StringField('Company Name', validators=[DataRequired()])
+    location = StringField('Location', validators=[DataRequired()])
+    job_description = TextAreaField('Job Description', validators=[DataRequired()])
+    salary = StringField('Salary', validators=[DataRequired()])
+    experience_required = StringField('Experience Required', validators=[DataRequired()])
+    submit = SubmitField('Post Job')
+   
+
+class ApplyForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired()])
+    resume = StringField('Resume', validators=[DataRequired()])
+    submit = SubmitField('Apply')
 
 
