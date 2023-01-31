@@ -86,6 +86,21 @@ def resume():
         return redirect(url_for('success'))
     return render_template('resume.html', form=form)
 
+
+@app.route("/apply/<int:job_id>", methods=['GET', 'POST'])
+@login_required
+def apply(job_id):
+    job = JobPostForm.query.get(job_id)
+    form = ApplyForm()
+    if form.validate_on_submit():
+        apply = ApplyForm(name=form.name.data, email=form.email.data, resume=form.resume.data, job_id=job_id, student_id=current_user.id)
+        db.session.add(apply)
+        db.session.commit()
+        flash('Your application has been submitted successfully!', 'success')
+        return redirect(url_for('home'))
+    return render_template('apply.html', title='Apply', form=form, job=job)
+
+
 @app.route("/jobpost", methods=["GET", "POST"])
 def jobpost():
     form = JobPostForm()
@@ -101,14 +116,14 @@ def jobpost():
         return redirect(url_for('success'))
     return render_template('jobpost.html', form=form)
 
-@app.route("/apply", methods=['GET', 'POST'])
-def apply():
-    form = ApplyForm()
-    if form.validate_on_submit():
-        # Process form data and store it in a database or somewhere else
-        flash('Your application has been submitted!', 'success')
-        return redirect(url_for('home'))
-    return render_template('apply.html', title='Apply', form=form)
+# @app.route("/apply", methods=['GET', 'POST'])
+# def apply():
+#     form = ApplyForm()
+#     if form.validate_on_submit():
+#         # Process form data and store it in a database or somewhere else
+#         flash('Your application has been submitted!', 'success')
+#         return redirect(url_for('home'))
+#     return render_template('apply.html', title='Apply', form=form)
 
 @app.route("/logout_student")
 def logout_student():

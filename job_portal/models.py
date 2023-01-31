@@ -19,7 +19,7 @@ class Student(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
-    posts = db.relationship('Post', backref='author', lazy=True)
+    posts = db.relationship('Resume', backref='owner', lazy=True)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
@@ -29,7 +29,7 @@ class Employer(db.Model, UserMixin):
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    jobs = db.relationship('JobPost', backref='author', lazy=True)
+    jobs = db.relationship('JobPostForm', backref='author', lazy=True)
 
     def __repr__(self):
         return f"Employer('{self.username}', '{self.email}')"
@@ -43,7 +43,7 @@ class Resume(db.Model):
     experience = db.Column(db.Text, nullable=False)
     education = db.Column(db.Text, nullable=False)
     skills = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
 
     def __repr__(self):
         return f"Resume('{self.name}')"
