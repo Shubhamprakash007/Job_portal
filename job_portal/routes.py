@@ -1,12 +1,12 @@
 from flask import render_template, url_for, flash, redirect, request
 from job_portal import app, db, bcrypt
 from job_portal.forms import StudentRegistrationForm,EmployerRegistrationForm, StudentLoginForm, EmployerLoginForm, ApplyForm, JobPostForm, ResumeForm
-from job_portal.models import Student, Employer, Resume, JobPostForm
+from job_portal.models import Student, Employer, Resume, JobPost, Apply
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route("/")
 def home():
-    jobs = JobPostForm.query.all()
+    jobs = JobPost.query.all()
     return render_template('home.html', jobs=jobs)
 
 @app.route("/about")
@@ -20,12 +20,14 @@ def register_employer():
     form = EmployerRegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = Employer(username=form.username.data, email=form.email.data, password=hashed_password)
+        user = Employer(username=form.username.data, 
+                        email=form.email.data, 
+                        password=hashed_password)
         db.session.add(user)
         db.session.commit()
         flash(f'Account created for {form.username.data}!', 'success')
-        return redirect(url_for('login'))
-    return render_template('register_student.html', title='Register', form=form)
+        return redirect(url_for('login_employer'))
+    return render_template('register_employer.html', title='Register', form=form)
 
 @app.route("/register_student", methods=['GET', 'POST'])
 def register_student():
@@ -34,7 +36,9 @@ def register_student():
     form = StudentRegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = Student(username=form.username.data, email=form.email.data, password=hashed_password)
+        user = Student(username=form.username.data, 
+                      email=form.email.data, 
+                      password=hashed_password)
         db.session.add(user)
         db.session.commit()
         flash(f'Account created for {form.username.data}!', 'success')
@@ -59,17 +63,18 @@ def login_student():
 @app.route("/login_employer", methods=['GET', 'POST'])
 def login_employer():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('jobpost'))
     form = EmployerLoginForm()
     if form.validate_on_submit():
         user = Employer.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('home'))
+            return redirect(next_page) if next_page else redirect(url_for('jobpost'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login_employer.html', title='Login', form=form)
+
 
 @app.route("/resume", methods=["GET", "POST"])
 def resume():
@@ -86,44 +91,43 @@ def resume():
         return redirect(url_for('success'))
     return render_template('resume.html', form=form)
 
+@app.route("/jobpost", methods=["GET", "POST"])
+def jobpost():
+    form = JobPostForm()
+    if form.validate_on_submit():
+        jobpost = JobPost(job_title=form.job_title.data,
+                          company_name=form.company_name.data,
+                          location=form.location.data,
+                          job_description=form.job_description.data,
+                          salary=form.salary.data,
+                          experience_required=form.experience_required.data,
+                          employer_id=form.employer_id.data)
+        db.session.add(jobpost)
+        db.session.commit()
+        return redirect(url_for('success'))
+    return render_template('jobpost.html', form=form)
+
+@app.route("/success")
+def success():
+    return render_template("success.html")
 
 @app.route("/apply/<int:job_id>", methods=['GET', 'POST'])
 @login_required
 def apply(job_id):
-    job = JobPostForm.query.get(job_id)
+    job = JobPost.query.get(job_id)
     form = ApplyForm()
     if form.validate_on_submit():
-        apply = ApplyForm(name=form.name.data, email=form.email.data, resume=form.resume.data, job_id=job_id, student_id=current_user.id)
+        apply = Apply(name=form.name.data,
+                         email=form.email.data,
+                         resume=form.resume.data, 
+                         job_id=job_id, 
+                         student_id=current_user.id)
         db.session.add(apply)
         db.session.commit()
         flash('Your application has been submitted successfully!', 'success')
         return redirect(url_for('home'))
     return render_template('apply.html', title='Apply', form=form, job=job)
 
-
-@app.route("/jobpost", methods=["GET", "POST"])
-def jobpost():
-    form = JobPostForm()
-    if form.validate_on_submit():
-        jobpost = JobPostForm(job_title=form.job_title.data,
-                          company_name=form.company_name.data,
-                          location=form.location.data,
-                          job_description=form.job_description.data,
-                          salary=form.salary.data,
-                          experience_required=form.experience_required.data)
-        db.session.add(jobpost)
-        db.session.commit()
-        return redirect(url_for('success'))
-    return render_template('jobpost.html', form=form)
-
-# @app.route("/apply", methods=['GET', 'POST'])
-# def apply():
-#     form = ApplyForm()
-#     if form.validate_on_submit():
-#         # Process form data and store it in a database or somewhere else
-#         flash('Your application has been submitted!', 'success')
-#         return redirect(url_for('home'))
-#     return render_template('apply.html', title='Apply', form=form)
 
 @app.route("/logout_student")
 def logout_student():

@@ -7,11 +7,6 @@ from flask_login import UserMixin
 def load_user(user_id):
     return Student.query.get(int(user_id))
 
-# @login_manager.user_loader
-# def load_employer(user_id):
-#     return Employer.query.get(int(user_id))
-
-
 
 class Student(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -29,7 +24,7 @@ class Employer(db.Model, UserMixin):
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    jobs = db.relationship('JobPostForm', backref='author', lazy=True)
+    jobs = db.relationship('JobPost', backref='author', lazy="dynamic")
 
     def __repr__(self):
         return f"Employer('{self.username}', '{self.email}')"
@@ -48,7 +43,7 @@ class Resume(db.Model):
     def __repr__(self):
         return f"Resume('{self.name}')"
 
-class JobPostForm(db.Model):
+class JobPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     job_title = db.Column(db.String(50), nullable=False)
     company_name = db.Column(db.String(50), nullable=False)
@@ -58,7 +53,17 @@ class JobPostForm(db.Model):
     salary = db.Column(db.String(50), nullable=False)
     experience_required = db.Column(db.String(50), nullable=False)
     employer_id = db.Column(db.Integer, db.ForeignKey('employer.id'), nullable=False)
+
     def __repr__(self):
         return f"Post('{self.job_title}', '{self.date_posted}')"
+
+
+class Apply(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(50), nullable=False)
+    resume = db.Column(db.String(100), nullable=False)
+    job_id = db.Column(db.Integer, db.ForeignKey('job_post.id'), nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
 
 

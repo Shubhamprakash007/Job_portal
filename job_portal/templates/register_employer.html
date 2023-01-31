@@ -1,0 +1,35 @@
+<!-- templates/register_employer.html -->
+{% extends "basic.html" %}
+
+{% block title %} Register as Employer {% endblock %}
+
+{% block content %}
+
+<h1 class="text-center mt-5"> Register as Employer </h1>
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.username.label(class="font-weight-bold") }}
+                {{ form.username(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.email.label(class="font-weight-bold") }}
+                {{ form.email(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class="font-weight-bold") }}
+                {{ form.password(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.confirm_password.label(class="font-weight-bold") }}
+                {{ form.confirm_password(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

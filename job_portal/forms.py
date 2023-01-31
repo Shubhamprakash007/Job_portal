@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from job_portal.models import Student, Employer
 
@@ -70,6 +70,7 @@ class ResumeForm(FlaskForm):
     experience = TextAreaField('Work Experience', validators=[DataRequired()])
     education = TextAreaField('Education', validators=[DataRequired()])
     skills = TextAreaField('Skills', validators=[DataRequired()])
+    user_id = IntegerField('Student ID', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 class JobPostForm(FlaskForm):
@@ -79,6 +80,7 @@ class JobPostForm(FlaskForm):
     job_description = TextAreaField('Job Description', validators=[DataRequired()])
     salary = StringField('Salary', validators=[DataRequired()])
     experience_required = StringField('Experience Required', validators=[DataRequired()])
+    employer_id = IntegerField('Employer ID', validators=[DataRequired()])
     submit = SubmitField('Post Job')
    
 
