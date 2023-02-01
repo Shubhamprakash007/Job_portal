@@ -29,4 +29,4 @@
 
 ## Create an ERD diagram of your database using dbdiagram.io
 
-![Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/59a01a42-92f9-4151-b964-5af3462d261e/Untitled.png)
+![ERD.png]https://github.com/Shubhamprakash007/Job_portal/blob/main/job_portal/static/ERD.png

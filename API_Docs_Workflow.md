@@ -75,9 +75,9 @@ On failure: Renders the job post.html template with the form.
 
 ## API doc including all the endpoints and input params and response formats
 
-[Link Text](routes.py)
+[routes.py](https://github.com/Shubhamprakash007/Job_portal/blob/main/job_portal/routes.py)
 
 ## API workflow diagram
 
-![API Diagram.jpeg](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/32c28995-96c4-4293-8636-ab188dd5fea2/API_Diagram.jpeg)
+![API Diagram.jpeg](https://github.com/Shubhamprakash007/Job_portal/blob/main/job_portal/static/API%20Diagram.jpeg)
 
