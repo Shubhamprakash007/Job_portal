@@ -1,6 +1,7 @@
 {% extends "basic.html" %}
 
 {% block content %}
+
   <h1>Apply for Job</h1>
   <form method="post" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
@@ -13,11 +14,7 @@
       {{ form.email(class="form-control") }}
     </div>
     <div class="form-group">
-      {{ form.resume.label }}
-      {{ form.resume(class="form-control-file") }}
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <a href="{{ url_for('resume') }}" class="btn btn-secondary">CreateResume & Submit</a>
     </div>
   </form>
 {% endblock %}

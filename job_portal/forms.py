@@ -64,13 +64,14 @@ class EmployerLoginForm(FlaskForm):
 
 
 class ResumeForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired()])
+    linkedIn = StringField('linkedIn', validators=[DataRequired()])
+    Phone = StringField('Phone', validators=[DataRequired()])
     objective = TextAreaField('Objective', validators=[DataRequired()])
     experience = TextAreaField('Work Experience', validators=[DataRequired()])
     education = TextAreaField('Education', validators=[DataRequired()])
     skills = TextAreaField('Skills', validators=[DataRequired()])
     user_id = IntegerField('Student ID', validators=[DataRequired()])
+    job_id = IntegerField('Job ID', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 class JobPostForm(FlaskForm):
@@ -87,7 +88,7 @@ class JobPostForm(FlaskForm):
 class ApplyForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
-    resume = StringField('Resume', validators=[DataRequired()])
+    job_id = IntegerField('Job ID', validators=[DataRequired()])
     submit = SubmitField('Apply')
 
 

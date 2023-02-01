@@ -2,11 +2,13 @@ from datetime import datetime
 from job_portal import db, login_manager
 from flask_login import UserMixin
 
-
 @login_manager.user_loader
 def load_user(user_id):
     return Student.query.get(int(user_id))
 
+@login_manager.user_loader
+def load_user(user_id):
+    return Employer.query.get(int(user_id))
 
 class Student(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -29,11 +31,10 @@ class Employer(db.Model, UserMixin):
     def __repr__(self):
         return f"Employer('{self.username}', '{self.email}')"
 
-
 class Resume(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
-    email = db.Column(db.String(50), nullable=False)
+    linkedIn = db.Column(db.String(50), nullable=False)
+    Phone = db.Column(db.String(50), nullable=False)
     objective = db.Column(db.Text, nullable=False)
     experience = db.Column(db.Text, nullable=False)
     education = db.Column(db.Text, nullable=False)
@@ -62,7 +63,6 @@ class Apply(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=False)
-    resume = db.Column(db.String(100), nullable=False)
     job_id = db.Column(db.Integer, db.ForeignKey('job_post.id'), nullable=False)
     student_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
 
