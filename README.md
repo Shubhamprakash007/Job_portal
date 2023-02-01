@@ -1,27 +1,14 @@
-# Ideation Document
+# Job Portal Website
 
-## The problem that you are solving?
+A job portal website is an online platform that connects job seekers with potential employers. It allows job seekers to:
+- Search for job openings
+- Create a profile
+- Upload their resume
+- Apply for jobs
 
-We aim to make job search process easier and more efficient for job seekers and easier for employers to find suitable candidates. Our platform provides a user-friendly interface for job search and application, and streamlines the hiring process.
+Employers can:
+- Post job listings
+- Search for candidates
+- Manage the hiring process through the website
 
-## Who are the users?
-
-- Job Seekers
-- Employers
-
-## Mention the top 3 features of your product
-
-1. User-friendly interface for job search and application
-2. Advanced search filters and job recommendations
-3. Secure and streamlined application process
-
-## Create a basic workflow for your app
-
-1. User registration
-2. Job search
-3. Job application
-4. Employer registration
-5. Employer review
-6. Interview scheduling
-7. Offer management
-8. Employer-employee communication
+The goal of a job portal is to make the job search and hiring process more efficient and convenient for both job seekers and employers.

@@ -2,13 +2,16 @@ from datetime import datetime
 from job_portal import db, login_manager
 from flask_login import UserMixin
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return Student.query.get(int(user_id))
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return Employer.query.get(int(user_id))
+
 
 class Student(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -21,6 +24,7 @@ class Student(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
+
 class Employer(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
@@ -30,6 +34,7 @@ class Employer(db.Model, UserMixin):
 
     def __repr__(self):
         return f"Employer('{self.username}', '{self.email}')"
+
 
 class Resume(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -43,6 +48,7 @@ class Resume(db.Model):
 
     def __repr__(self):
         return f"Resume('{self.name}')"
+
 
 class JobPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)

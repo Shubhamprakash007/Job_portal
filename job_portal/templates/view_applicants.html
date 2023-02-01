@@ -1,0 +1,19 @@
+{% extends "basic.html" %}
+  {% block content %}
+    <h1>Applicant Details</h1>
+    {% for i in application %}
+      <h2>Application</h2>
+      <p>Name: {{ i.name }}</p>
+      <p>Email: {{ i.email }}</p>
+      <p>Job ID: {{ i.job_id }}</p>
+      <p>Student ID: {{ i.student_id }}</p>
+    {% endfor %}
+    <h2>Resume</h2>
+    <p>LinkedIn: {{ resume.linkedIn }}</p>
+    <p>Phone: {{ resume.Phone }}</p>
+    <p>Objective: {{ resume.objective }}</p>
+    <p>Experience: {{ resume.experience }}</p>
+    <p>Education: {{ resume.education }}</p>
+    <p>Skills: {{ resume.skills }}</p>
+
+  {% endblock %}
