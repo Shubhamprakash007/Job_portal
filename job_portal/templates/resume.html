@@ -1,46 +1,99 @@
-{% extends "basic.html" %}
+
+
+              {% extends "basic.html" %}
 
 {% block content %}
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-  <ul class="flashes">
-    {% for category, message in messages %}
-      <li class="{{ category }}">{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
-  <h1>Create a Resume</h1>
-  <form method="post">
-    {{ form.hidden_tag() }}
-    <div class="form-group">
-      {{ form.linkedIn.label }}
-      {{ form.linkedIn(class="form-control") }}
-    </div>
-    <div class="form-group">
-      {{ form.Phone.label }}
-      {{ form.Phone(class="form-control") }}
-    </div>
-    <div class="form-group">
-      {{ form.objective.label }}
-      {{ form.objective(class="form-control") }}
-    </div>
-    <div class="form-group">
-      {{ form.experience.label }}
-      {{ form.experience(class="form-control") }}
-    </div>
-    <div class="form-group">
-      {{ form.education.label }}
-      {{ form.education(class="form-control") }}
-    </div>
-    <div class="form-group">
-      {{ form.skills.label }}
-      {{ form.skills(class="form-control") }}
-    </div>
-    <div class="form-group">
-      <a href="{{ url_for('home') }}" class="btn btn-secondary">Submit</a>
-    </div>
+    <div class="content-section">
+        <form method="POST" action="{{ url_for('resume') }}">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Resume</legend>
+
+                <div class="form-group">
+                    {{ form.linkedIn.label(class="form-control-label") }}
+                    {% if form.linkedIn.errors %}
+                        {{ form.linkedIn(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.linkedIn.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.linkedIn(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.Phone.label(class="form-control-label") }}
+                    {% if form.Phone.errors %}
+                        {{ form.Phone(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.Phone.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.Phone(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
 
 
-  </form>
-{% endblock %}
+                <div class="form-group">
+                    {{ form.objective.label(class="form-control-label") }}
+                    {% if form.objective.errors %}
+                        {{ form.objective(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.objective.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.objective(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.experience.label(class="form-control-label") }}
+                    {% if form.experience.errors %}
+                        {{ form.experience(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.experience.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.experience(class="form-control form-control-lg") }}
+                    {% endif %}
+                      </div>
+
+
+                      <div class="form-group">
+                        {{ form.education.label(class="font-weight-bold") }}
+                        {{ form.education(class="form-control") }}
+                        {% for error in form.education.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                      </div>
+
+                      <div class="form-group">
+                        {{ form.skills.label(class="font-weight-bold") }}
+                        {{ form.skills(class="form-control") }}
+                        {% for error in form.skills.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                      </div>
+
+                      <div class="form-group">
+                        {{ form.user_id.label(class="font-weight-bold") }}
+                        {{ form.user_id(class="form-control") }}
+                        {% for error in form.user_id.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                      <button type="submit" class="btn btn-primary float-right">submit</button>
+                    </form>
+                  </div>
+                {% endblock %}
+                
+                
+                
+                

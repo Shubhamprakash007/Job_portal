@@ -47,10 +47,11 @@ class Resume(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
 
     def __repr__(self):
-        return f"Resume('{self.name}')"
+        return f"Resume('{self.linkedIn}')"
 
 
 class JobPost(db.Model):
+    __tablename__ = 'job_post'
     id = db.Column(db.Integer, primary_key=True)
     job_title = db.Column(db.String(50), nullable=False)
     company_name = db.Column(db.String(50), nullable=False)

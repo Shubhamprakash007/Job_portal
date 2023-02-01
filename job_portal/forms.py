@@ -67,7 +67,6 @@ class ResumeForm(FlaskForm):
     education = TextAreaField('Education', validators=[DataRequired()])
     skills = TextAreaField('Skills', validators=[DataRequired()])
     user_id = IntegerField('Student ID', validators=[DataRequired()])
-    job_id = IntegerField('Job ID', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -85,7 +84,6 @@ class JobPostForm(FlaskForm):
 class ApplyForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired()])
-    job_id = IntegerField('Job ID', validators=[DataRequired()])
     submit = SubmitField('Apply')
 
 

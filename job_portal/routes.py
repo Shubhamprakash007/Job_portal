@@ -9,7 +9,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 def home():
     jobs = JobPost.query.all()
     return render_template('home.html', jobs=jobs)
-    
+
 
 @app.route("/about")
 def about():
@@ -97,18 +97,19 @@ def view_applicants():
 
 @app.route("/resume", methods=["GET", "POST"])
 def resume():
+    print("Resuming application dfdfdf")
     form = ResumeForm()
     if form.validate_on_submit():
-        resume = Resume(name=form.linkedIn.data,
-                        email=form.Phone.data,
+        print(form.linkedIn.data)
+        resume = Resume(linkedIn=form.linkedIn.data,
+                        Phone=form.Phone.data,
                         objective=form.objective.data,
                         experience=form.experience.data,
                         education=form.education.data,
                         skills=form.skills.data,
-                        job_id=form.job_id.data)
+                        user_id=form.user_id.data)
         db.session.add(resume)
         db.session.commit()
-        flash('Resume created successfully!', 'success')
         return redirect(url_for('home'))
     return render_template('resume.html', form=form)
 
@@ -116,6 +117,7 @@ def resume():
 def jobpost():
     form = JobPostForm()
     if form.validate_on_submit():
+        print(form.salary.data)
         jobpost = JobPost(job_title=form.job_title.data,
                           company_name=form.company_name.data,
                           location=form.location.data,
@@ -133,23 +135,25 @@ def success():
     return render_template("success.html")
 
 @app.route("/apply/<int:job_id>", methods=['GET', 'POST'])
-# @login_required(login_view='login_student')
 def apply(job_id):
     if not current_user.is_authenticated:
         return redirect(url_for('login_student'))
     else:
+        print(job_id)
         job = JobPost.query.get(job_id)
+
+        # job = JobPost.query.filter(id=job_id).first()
         form = ApplyForm()
         if form.validate_on_submit():
             apply = Apply(name=form.name.data,
-                            email=form.email.data, 
-                            job_id=job_id, 
-                            student_id=current_user.id)
+                          email=form.email.data, 
+                          job_id=job_id, 
+                          student_id=current_user.id)
             db.session.add(apply)
             db.session.commit()
-            flash('Your application has been submitted successfully!', 'success')
-            return redirect(url_for('home'))
-        return render_template('apply.html', title='Apply', form=form, job=job)
+            # flash('Your application has been submitted successfully!', 'success')
+            return redirect(url_for('resume'))
+        return render_template('apply.html', title='Apply', form=form, job=job, job_id=job_id)
 
 @app.route("/logout")
 def logout():
