@@ -141,7 +141,6 @@ def apply(job_id):
     else:
         print(job_id)
         job = JobPost.query.get(job_id)
-
         # job = JobPost.query.filter(id=job_id).first()
         form = ApplyForm()
         if form.validate_on_submit():
