@@ -52,3 +52,26 @@ pip install -r requirements.txt
 python run.py
 
 Access the website by visiting `http://localhost:5000` in your web browser.
+
+## Contributing
+
+If you'd like to contribute to the job portal website, you're in the right place! Here are some ways you can help:
+
+- Report bugs: If you encounter any issues with the website, please let me know by submitting an issue on Github.
+
+- Suggest new features: If you have an idea for a new feature that would improve the website, feel free to submit a suggestion on Github.
+
+- Improve the frontend: If you're a frontend developer, your contributions would be greatly appreciated. You can make changes to the HTML, CSS, and JavaScript files to improve the user interface and user experience.
+
+To contribute, simply fork the repository, make your changes, and submit a pull request. I will review your changes and merge them if they align with the goals of the project. Thank you for your help!
+
+
+## Contact Information
+
+If you have any questions or issues with the website, feel free to contact me.
+
+- Email: shubhampark007@gmail.com
+- WhatsApp: 9430556559
+
+I will do my best to respond promptly and assist with any concerns you may have. Thank you for using my job portal website.
+
