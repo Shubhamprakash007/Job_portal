@@ -2,15 +2,29 @@ from datetime import datetime
 from job_portal import db, login_manager
 from flask_login import UserMixin
 
-
 @login_manager.user_loader
 def load_user(user_id):
-    return Student.query.get(int(user_id))
+    # Check if the user_id corresponds to a Student or an Employer
+    student = Student.query.get(int(user_id))
+    if student:
+        return student
+
+    employer = Employer.query.get(int(user_id))
+    if employer:
+        return employer
+
+    return None  # Return None if the user_id doesn't correspond to any valid user
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    return Employer.query.get(int(user_id))
+
+# @login_manager.user_loader
+# def load_user(user_id):
+#     return Student.query.get(int(user_id))
+
+
+# @login_manager.user_loader
+# def load_user(user_id):
+#     return Employer.query.get(int(user_id))
 
 
 class Student(db.Model, UserMixin):

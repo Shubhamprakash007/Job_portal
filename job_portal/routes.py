@@ -57,10 +57,11 @@ def login_student():
     form = StudentLoginForm()
     if form.validate_on_submit():
         user = Student.query.filter_by(email=form.email.data).first()
+        flash('Login Unsuccessful', 'danger')
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('home'))
+            return redirect(next_page) if next_page else redirect(url_for('resume'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login_student.html', title='Login', form=form)
@@ -97,20 +98,22 @@ def view_applicants():
 
 @app.route("/resume", methods=["GET", "POST"])
 def resume():
-    print("Resuming application dfdfdf")
-    form = ResumeForm()
-    if form.validate_on_submit():
-        print(form.linkedIn.data)
-        resume = Resume(linkedIn=form.linkedIn.data,
-                        Phone=form.Phone.data,
-                        objective=form.objective.data,
-                        experience=form.experience.data,
-                        education=form.education.data,
-                        skills=form.skills.data,
-                        user_id=form.user_id.data)
-        db.session.add(resume)
-        db.session.commit()
-        return redirect(url_for('home'))
+    if not current_user.is_authenticated:
+        return redirect(url_for('login_student'))
+    else:
+        form = ResumeForm()
+        if form.validate_on_submit():
+            print(form.linkedIn.data)
+            resume = Resume(linkedIn=form.linkedIn.data,
+                            Phone=form.Phone.data,
+                            objective=form.objective.data,
+                            experience=form.experience.data,
+                            education=form.education.data,
+                            skills=form.skills.data,
+                            user_id=form.user_id.data)
+            db.session.add(resume)
+            db.session.commit()
+            return redirect(url_for('home'))
     return render_template('resume.html', form=form)
 
 @app.route("/jobpost", methods=["GET", "POST"])
